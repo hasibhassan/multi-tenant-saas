@@ -62,9 +62,9 @@ jobs:
       # Update the .env file in the root
       - name: Update .env File
         run: |
-          echo "NEXT_PUBLIC_API_GATEWAY_ENDPOINT=${{ env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT }}" > .env
-          echo "NEXT_PUBLIC_COGNITO_USER_POOL_ID=${{ env.NEXT_PUBLIC_COGNITO_USER_POOL_ID }}" >> .env
-          echo "NEXT_PUBLIC_COGNITO_APP_CLIENT_ID=${{ env.NEXT_PUBLIC_COGNITO_APP_CLIENT_ID }}" >> .env
+          echo "NEXT_PUBLIC_API_GATEWAY_ENDPOINT=${{ env.API_GATEWAY_ENDPOINT }}" > .env
+          echo "NEXT_PUBLIC_COGNITO_USER_POOL_ID=${{ env.COGNITO_USER_POOL_ID }}" >> .env
+          echo "NEXT_PUBLIC_COGNITO_APP_CLIENT_ID=${{ env.COGNITO_APP_CLIENT_ID }}" >> .env
           echo "NEXT_PUBLIC_REGION=${{ secrets.AWS_REGION }}" >> .env
           echo "SYSTEM_ADMIN_EMAIL=${{ secrets.SYSTEM_ADMIN_EMAIL }}" >> .env
           echo "FRONTEND_DOMAIN=${{ secrets.FRONTEND_DOMAIN }}" >> .env
@@ -79,4 +79,4 @@ jobs:
 
       # Deploy the Frontend Deployment Stack (which deploys the out folder)
       - name: Deploy Frontend Stack
-        run: npx cdk deploy FrontendDeploymentStack --require-approval never
+        run: npx cdk deploy FrontendStack --require-approval never

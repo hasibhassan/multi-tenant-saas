@@ -1,20 +1,35 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
-import { MultiTenantSaasStack } from '../lib/multi-tenant-saas-stack';
+import * as cdk from 'aws-cdk-lib'
+import * as apigatewayv2 from 'aws-cdk-lib/aws-apigatewayv2'
+import 'source-map-support/register'
+import { ControlPlane } from '../lib/control-plane'
+import { FrontendDeploymentStack } from '../lib/frontend/frontend-deployment-stack'
 
-const app = new cdk.App();
-new MultiTenantSaasStack(app, 'MultiTenantSaasStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+const app = new cdk.App()
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// Create a stack for the ControlPlane construct
+const controlPlaneStack = new cdk.Stack(app, 'ControlPlaneStack')
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+new ControlPlane(controlPlaneStack, 'ControlPlane', {
+  systemAdminEmail: process.env.SYSTEM_ADMIN_EMAIL || '', // Enter your email here
+  apiCorsConfig: {
+    allowOrigins: [process.env.FRONTEND_DOMAIN || '*'], // Allow all if not set
+    allowMethods: [
+      apigatewayv2.CorsHttpMethod.GET,
+      apigatewayv2.CorsHttpMethod.POST,
+      apigatewayv2.CorsHttpMethod.PUT,
+      apigatewayv2.CorsHttpMethod.PATCH,
+      apigatewayv2.CorsHttpMethod.DELETE,
+      apigatewayv2.CorsHttpMethod.OPTIONS, // Optional, but good practice
+    ],
+    allowHeaders: ['Authorization', 'Content-Type'],
+    allowCredentials: true, // Required for JWT authentication
+  },
+})
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+// Instantiate the FrontendDeploymentStack directly as it's already a stack
+new FrontendDeploymentStack(app, 'FrontendStack', {
+  // additional properties if needed
+})
+
+app.synth()

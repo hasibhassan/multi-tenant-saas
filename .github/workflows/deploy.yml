@@ -1,0 +1,69 @@
+name: Build and Deploy CDK Stacks
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repo
+      - uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          architecture: 'arm64'
+
+      # Configure AWS creds
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Install CDK deps
+      - name: Install CDK Dependencies
+        run: npm install
+
+      # Deploy ControlPlaneStack first
+      - name: Deploy ControlPlaneStack
+        run: npx cdk deploy ControlPlaneStack --require-approval never
+
+      # Retrieve CloudFormation outputs
+      - name: Retrieve CloudFormation Outputs
+        run: |
+          outputs=$(aws cloudformation describe-stacks --stack-name ${{ secrets.CONTROL_PLANE_STACK_NAME }} --query "Stacks[0].Outputs" --output json)
+          echo "Outputs: $outputs"
+
+          # Extract values dynamically using GitHub Secrets for the CloudFormation keys
+          echo "API_GATEWAY_URL=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_API_GATEWAY_OUTPUT_KEY }}") | .OutputValue')" >> $GITHUB_ENV
+          echo "COGNITO_USER_POOL_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_USER_POOL_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
+          echo "COGNITO_APP_CLIENT_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_APP_CLIENT_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
+
+      # Generate the .env file in the root
+      - name: Generate .env File
+        run: |
+          echo "NEXT_PUBLIC_API_GATEWAY_ENDPOINT=${{ env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT }}" > .env
+          echo "NEXT_PUBLIC_COGNITO_USER_POOL_ID=${{ env.NEXT_PUBLIC_COGNITO_USER_POOL_ID }}" >> .env
+          echo "NEXT_PUBLIC_COGNITO_APP_CLIENT_ID=${{ env.NEXT_PUBLIC_COGNITO_APP_CLIENT_ID }}" >> .env
+          echo "NEXT_PUBLIC_REGION=${{ secrets.AWS_REGION }}" >> .env
+          echo "SYSTEM_ADMIN_EMAIL=${{ secrets.SYSTEM_ADMIN_EMAIL }}" >> .env
+          echo "FRONTEND_DOMAIN=${{ secrets.FRONTEND_DOMAIN }}" >> .env
+          cat .env  
+        # Last step is to check if file is created correctly
+
+      # Install dependencies and build Next.js app
+      - name: Build Next.js App
+        run: |
+          npm install --force
+          npm run build
+        working-directory: frontend
+
+      # Deploy the Frontend Deployment Stack (which deploys the out folder)
+      - name: Deploy Frontend Stack
+        run: npx cdk deploy FrontendDeploymentStack --require-approval never

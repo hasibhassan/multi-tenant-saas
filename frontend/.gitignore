@@ -37,7 +37,6 @@ next-env.d.ts
 
 *.js
 !jest.config.js
-*.d.ts
 
 # Created by https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode,node
 # Edit at https://www.gitignore.io/?templates=osx,linux,python,windows,pycharm,visualstudiocode,node

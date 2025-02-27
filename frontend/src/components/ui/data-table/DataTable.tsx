@@ -9,12 +9,6 @@ import {
   TableRow,
 } from "@/components/Table"
 import { cx } from "@/lib/utils"
-import * as React from "react"
-
-import { DataTableBulkEditor } from "./DataTableBulkEditor"
-import { Filterbar } from "./DataTableFilterbar"
-import { DataTablePagination } from "./DataTablePagination"
-
 import {
   ColumnDef,
   flexRender,
@@ -24,6 +18,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import * as React from "react"
+import { DataTableBulkEditor } from "./DataTableBulkEditor"
+import { Filterbar } from "./DataTableFilterbar"
+import { DataTablePagination } from "./DataTablePagination"
 
 interface DataTableProps<TData> {
   columns: ColumnDef<TData>[]

@@ -41,7 +41,7 @@ jobs:
       - name: Install Deps and Build Next.js App
         run: |
           npm install --force
-          NEXT_DISABLE_ESLINT=1 NEXT_DISABLE_TSC_CHECK=1 npm run build
+          npm run build
         working-directory: frontend
 
       # Deploy ControlPlaneStack first
@@ -74,7 +74,7 @@ jobs:
       # Install dependencies and build Next.js app
       - name: Build Next.js App with updated env vars
         run: |
-          NEXT_DISABLE_ESLINT=1 NEXT_DISABLE_TSC_CHECK=1 npm run build
+          npm run build
         working-directory: frontend
 
       # Deploy the Frontend Deployment Stack (which deploys the out folder)

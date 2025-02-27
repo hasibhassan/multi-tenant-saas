@@ -38,7 +38,7 @@ jobs:
         # Last step is to check if file is created correctly
 
       # Install dependencies and build Next.js app (for CDK project to build)
-      - name: Build Next.js App
+      - name: Install Deps and Build Next.js App
         run: |
           npm install --force
           npm run build
@@ -74,7 +74,6 @@ jobs:
       # Install dependencies and build Next.js app
       - name: Build Next.js App with updated env vars
         run: |
-          npm install --force
           npm run build
         working-directory: frontend
 

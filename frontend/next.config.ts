@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 import createMDX from "@next/mdx"
 import dotenv from "dotenv"
 import type { NextConfig } from "next"

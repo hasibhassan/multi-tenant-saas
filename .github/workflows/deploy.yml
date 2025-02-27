@@ -37,6 +37,13 @@ jobs:
           cat .env  
         # Last step is to check if file is created correctly
 
+      # Install dependencies and build Next.js app (for CDK project to build)
+      - name: Build Next.js App
+        run: |
+          npm install --force
+          npm run build
+        working-directory: frontend
+
       # Deploy ControlPlaneStack first
       - name: Deploy ControlPlaneStack
         run: npx cdk deploy ControlPlaneStack --require-approval never
@@ -65,7 +72,7 @@ jobs:
         # Last step is to check if file is created correctly
 
       # Install dependencies and build Next.js app
-      - name: Build Next.js App
+      - name: Build Next.js App with updated env vars
         run: |
           npm install --force
           npm run build

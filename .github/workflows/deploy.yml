@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          architecture: 'arm64'
 
       # Configure AWS creds
       - name: Configure AWS Credentials

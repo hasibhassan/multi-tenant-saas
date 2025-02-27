@@ -29,6 +29,14 @@ jobs:
       - name: Install CDK Dependencies
         run: npm install
 
+      # Generate the .env file in the root
+      - name: Generate .env File
+        run: |
+          echo "SYSTEM_ADMIN_EMAIL=${{ secrets.SYSTEM_ADMIN_EMAIL }}" >> .env
+          echo "FRONTEND_DOMAIN=${{ secrets.FRONTEND_DOMAIN }}" >> .env
+          cat .env  
+        # Last step is to check if file is created correctly
+
       # Deploy ControlPlaneStack first
       - name: Deploy ControlPlaneStack
         run: npx cdk deploy ControlPlaneStack --require-approval never
@@ -44,8 +52,8 @@ jobs:
           echo "COGNITO_USER_POOL_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_USER_POOL_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
           echo "COGNITO_APP_CLIENT_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_APP_CLIENT_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
 
-      # Generate the .env file in the root
-      - name: Generate .env File
+      # Update the .env file in the root
+      - name: Update .env File
         run: |
           echo "NEXT_PUBLIC_API_GATEWAY_ENDPOINT=${{ env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT }}" > .env
           echo "NEXT_PUBLIC_COGNITO_USER_POOL_ID=${{ env.NEXT_PUBLIC_COGNITO_USER_POOL_ID }}" >> .env

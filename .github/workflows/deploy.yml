@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main ]
 
+# Only run the workflow for the most recent push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest

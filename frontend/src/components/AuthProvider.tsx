@@ -3,6 +3,7 @@ import { useToast } from "@/lib/useToast"
 import {
   confirmSignUp,
   getCurrentUser,
+  GetCurrentUserOutput,
   signIn,
   signOut,
   signUp,
@@ -10,7 +11,7 @@ import {
 import { useRouter } from "next/navigation"
 import React, { createContext, useContext, useEffect, useState } from "react"
 
-export type AuthUser = { username: string } | null
+export type AuthUser = GetCurrentUserOutput | null
 
 // Create the AuthContext
 const AuthContext = createContext<{

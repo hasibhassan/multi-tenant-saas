@@ -1,6 +1,5 @@
 "use client"
 import { useAuth } from "@/components/AuthProvider"
-import { ProgressBar } from "@/components/ProgressBar"
 import { RiAddFill } from "@remixicon/react"
 import { Tab, TabGroup, TabList } from "@tremor/react"
 import { useRouter } from "next/navigation"
@@ -15,20 +14,7 @@ export default function Page() {
       // If a user is already authenticated, redirect them away from login
       router.push("/dashboard/overview")
     }
-
-    if (!loading && !user) {
-      // If a user is already authenticated, redirect them away from login
-      router.push("/login")
-    }
   }, [user, loading, router])
-
-  // Optionally, show a loading spinner if still checking auth state
-  if (loading) return <ProgressBar />
-
-  if (!user) {
-    console.log("no user")
-    return null // Prevent rendering before redirect
-  }
 
   return (
     <>

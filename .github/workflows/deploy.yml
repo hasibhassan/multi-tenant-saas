@@ -55,7 +55,7 @@ jobs:
           echo "Outputs: $outputs"
 
           # Extract values dynamically using GitHub Secrets for the CloudFormation keys
-          echo "API_GATEWAY_URL=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_API_GATEWAY_OUTPUT_KEY }}") | .OutputValue')" >> $GITHUB_ENV
+          echo "API_GATEWAY_ENDPOINT=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_API_GATEWAY_OUTPUT_KEY }}") | .OutputValue')" >> $GITHUB_ENV
           echo "COGNITO_USER_POOL_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_USER_POOL_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
           echo "COGNITO_APP_CLIENT_ID=$(echo $outputs | jq -r '.[] | select(.OutputKey=="${{ secrets.CLOUDFORMATION_COGNITO_APP_CLIENT_ID_KEY }}") | .OutputValue')" >> $GITHUB_ENV
 

@@ -19,6 +19,10 @@ npm run dev
 3. Visit [http://localhost:3000](http://localhost:3000) in your browser to view
    the template.
 
+Also
+* `npm run build`   builds the static output
+* `npx serve out`    serves the static output
+
 ## Notes
 
 This project uses

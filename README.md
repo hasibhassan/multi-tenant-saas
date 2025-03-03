@@ -61,7 +61,7 @@ The project is split into three main components:
 2. **Application Plane (Minimal)**
     - In this demo, not much is implemented beyond placeholders. In a real SaaS, you would add your app logic here.
 
-3. **Frontend Demo Application**
+3. **Frontend**
     - **Next.js Static Website:** Demonstrates a basic SaaS UI with a landing page, sign up & login, and dashboard.
     - **Basic Authentication:** Implements simple auth to protect access to demo dashboard pages.
 

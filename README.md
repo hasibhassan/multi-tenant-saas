@@ -80,7 +80,8 @@ The project is split into three main components:
 * `npx cdk bootstrap`    Bootstraps CDK resources
 * `npx cdk deploy ControlPlaneStack`    Deploys the Control Plane
 
-> [!NOTE] This will create or update your AWS resources, including:
+>[!NOTE] 
+> This will create or update your AWS resources, including:
 > - Cognito User Pool and App Client
 > - API Gateway HTTP API
 > - DynamoDB tables for tenant/user records

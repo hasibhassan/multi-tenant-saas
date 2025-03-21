@@ -24,7 +24,7 @@ The Next.js static site included here provides only a placeholder landing page, 
 - Core services for the control plane: AWS Lambda, Amazon API Gateway, Amazon DynamoDB, Amazon Cognito, Amazon EventBridge 
 - Next.js (for the static frontend demo) with S3 + CloudFront
 
-## Project Structure
+## Navigating this project
 ```sh
 .
 ├── bin/
@@ -44,6 +44,13 @@ The Next.js static site included here provides only a placeholder landing page, 
 │   └── ...                    # Additional constructs and AWS resources
 └── README.md
 ```
+
+- [Tenant-aware fine-grained access control using OAuth 2.0 and OIDC](./lib/auth/auth.ts)
+- [Event-driven architecture with a message bus for distributed service communication](./lib/event-bus.ts)
+- [Real time monitoring and logging integrated with Amazon CloudWatch](./lambda/userManagement.ts)
+- [Tenant management service for registration, onboarding, and offboarding](./lib/tenant-management/tenant-management.ts)
+- [Next.js static frontend demo featuring a landing page, basic dashboard, and auth integration](./frontend/src/app/page.tsx)
+- [Automated CI/CD deployment with GitHub Actions](./.github/workflows/deploy.yml)
 
 ## Architecture Diagram (High-Level)
 

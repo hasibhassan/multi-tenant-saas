@@ -72,6 +72,15 @@ The project is split into three main components:
     - **Next.js Static Website:** Demonstrates a basic SaaS UI with a landing page, sign up & login, and dashboard.
     - **Basic Authentication:** Implements simple auth to protect access to demo dashboard pages.
 
+## System Design Considerations
+
+- Control and application planes communicate asyncronously using a message bus (EventBridge) in order to enable decoupling and scalable cross-service communication
+- Isolation of failures is also achieved through the decoupled event-driven design, minimizing the impact of a service’s failure on others
+- Uses clear abstractions and interfaces (e.g., [EventManager](./types/EventManager.ts), [Auth](./types/Auth.ts)) which also allows for alternate implemenations
+- Security and identity context propagation is done through the tenant and user identity embedded in event metadata, which allows downstream services to be tenant-aware and enforce scoped authorization
+- Each construct (ControlPlane, CognitoAuth, UserManagementService, etc) is independently deployable and composable which makes it suitable for microservice environments
+- Uses AWS serverless services like Lambda, Step Functions, EventBridge, etc to automatically scale with demand and provide retry mechanisms
+
 ## Available Scripts
 
 ### Prerequisites and Setup

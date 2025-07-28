@@ -1,5 +1,5 @@
 {
-  "name": "multi-tenant-saas",
+  "name": "tenancy-kit",
   "version": "0.1.0",
   "bin": {
     "multi-tenant-saas": "bin/multi-tenant-saas.js"

@@ -1,7 +1,11 @@
 <h1 align="center">
-  Multi-Tenant SaaS
+  TenancyKit
   <br>
 </h1>
+
+<p align="center">
+  Serverless multi‑tenant SaaS kit for AWS (CDK/TypeScript)
+</p>
 
 <p align="center">
   <a>
@@ -12,11 +16,14 @@
   <a href="https://d1ww2wzcm0dott.cloudfront.net/"><img src="https://img.shields.io/badge/Demo-online-brightgreen"></a>
 </p>
 
-This project is a demo/reference architecture for building serverless, multi-tenant SaaS applications on AWS using the [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) in TypeScript. It demonstrates essential control plane functionalities including auth, user management, and tenant management.
+**TenancyKit** is an opinionated kit for building serverless, multi-tenant SaaS applications on AWS using the [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) in TypeScript. It provides reusable building blocks and example code for the control plane—authentication, user management, and tenant lifecycle—implemented with AWS Lambda, API Gateway, DynamoDB, Cognito, and EventBridge.
 
-The aim of this project is to showcase how a multi-tenant SaaS might be structured using AWS services and to act as a starting point or reference for developers looking to build multi-tenant serverless application. It is also meant to be extensible and provides some types to allow using other implementations of various services like auth or billing. Future plans include leveraging open standards like [OpenTelemetry](https://opentelemetry.io/) and [CloudEvents](https://cloudevents.io/) for even more extensibility. This is not a fully featured SaaS product, but a skeleton with enough scaffolding to demonstrate tenant onboarding, auth, billing, metering, and basic user flows.
+Use TenancyKit as both a starting point and a reference. The constructs are designed to be swapped or extended and provide some types to allow using other implementations of various services like auth or billing. The project aims to embrace open standards like [OpenTelemetry](https://opentelemetry.io/) and [CloudEvents](https://cloudevents.io/) in the future for observability and interoperability. TenancyKit is not a turnkey SaaS product; it’s production‑minded scaffolding that demonstrates tenant onboarding, auth, billing, metering, and basic user flows.
 
-The Next.js static site included here provides only a placeholder landing page, a basic dashboard, and simple auth integration. It does not fully implement tenant-aware UI features. Feel free to replace or extend it with your own frontend.
+A minimal Next.js placeholder static site is included to showcase a landing page, sign‑up/login, and a simple dashboard. It’s intentionally lightweight and not fully tenant‑aware. Replace or extend it to suit your application UI.
+
+
+> TenancyKit is a kit + reference, not a turnkey product. You own hardening, compliance, and app‑plane features.
 
 ## Technologies Used
 
